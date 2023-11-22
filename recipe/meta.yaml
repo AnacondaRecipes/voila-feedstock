@@ -11,35 +11,37 @@ source:
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
+  skip: true # [py<38 or s390x]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
   entry_points:
     - voila = voila.app:main
 
 requirements:
   host:
-    - python >=3.8
+    - python
     - pip
-    - nodejs >=18,<19
-    - hatch-jupyter-builder >=0.3.2
+    - hatch-jupyter-builder >=0.5.3
     - hatchling >=1.8.1
   run:
-    - python >=3.8
+    - python
     - nbconvert >=6.4.5,<8
     - jupyter_core >=4.11.0
     - jupyterlab_server >=2.3.0,<3
     - jupyter_client >=7.4.4,<=9
     - jupyter_server >=2.0.0,<3
     - nbclient >=0.4.0,<0.8
-    - websockets >=9
+    - websockets >=9.0
     - traitlets >=5.0.3,<6
   run_constrained:
-    - ipywidgets =8
+    - ipywidgets =8 # set by core developer on cf recipe.
 
 test:
   imports:
     - voila
+  requires:
+    - pip
   commands:
+    - pip check
     - voila --help
 
 
@@ -58,6 +60,7 @@ about:
     By default, voila disallows execute requests from the front-end, disabling
     the ability to execute arbitrary code.
   dev_url: https://github.com/voila-dashboards/voila
+  doc_url: https://voila.readthedocs.io/
 
 extra:
   recipe-maintainers:
