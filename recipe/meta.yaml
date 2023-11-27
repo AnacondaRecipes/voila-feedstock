@@ -27,7 +27,7 @@ requirements:
     - nbconvert >=6.4.5,<8
     - jupyter_core >=4.11.0
     - jupyterlab_server >=2.3.0,<3
-    - jupyter_client >=7.4.4,<=9
+    - jupyter_client >=7.4.4,<9
     - jupyter_server >=2.0.0,<3
     - nbclient >=0.4.0,<0.8
     - websockets >=9.0
