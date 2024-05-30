@@ -22,7 +22,6 @@ requirements:
     - pip
     - hatch-jupyter-builder >=0.5.3
     - hatchling >=1.8.1
-    - jupyterlab >=4.0
     - jupyter_core
   run:
     - python
