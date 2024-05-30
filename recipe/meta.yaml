@@ -1,5 +1,5 @@
 {% set name = "voila" %}
-{% set version = "0.5.5" %}
+{% set version = "0.5.7" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 35c7ef6ea4b8beb3e01844f34b6a19d925f69eed1b71e43dd9bf07ced9f0ee39
+  sha256: 1aa1a3aef73cc30a9ea4217f13a64269c1cc9185edbf10c2db820fa4ff29525f
 
 build:
   number: 0
@@ -22,16 +22,17 @@ requirements:
     - pip
     - hatch-jupyter-builder >=0.5.3
     - hatchling >=1.8.1
+    - jupyter_core
   run:
     - python
-    - nbconvert >=6.4.5,<8
-    - jupyter_core >=4.11.0
-    - jupyterlab_server >=2.3.0,<3
     - jupyter_client >=7.4.4,<9
+    - jupyter_core >=4.11.0
     - jupyter_server >=2.0.0,<3
-    - nbclient >=0.4.0,<0.8
-    - websockets >=9.0
+    - jupyterlab_server >=2.3.0,<3
+    - nbclient >=0.4.0
+    - nbconvert >=6.4.5,<8
     - traitlets >=5.0.3,<6
+    - websockets >=9.0
   run_constrained:
     - ipywidgets =8 # set by core developer on cf recipe.
 
