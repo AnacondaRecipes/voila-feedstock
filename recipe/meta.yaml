@@ -1,17 +1,17 @@
 {% set name = "voila" %}
-{% set version = "0.5.7" %}
+{% set version = "0.5.8" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1aa1a3aef73cc30a9ea4217f13a64269c1cc9185edbf10c2db820fa4ff29525f
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3d9078c252a8b1f3fe58d465749d31cdc241b29c8f4ab77f123be35a17e2da95
 
 build:
   number: 0
-  skip: true # [py<38 or s390x]
+  skip: true  # [py<38]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
   entry_points:
     - voila = voila.app:main
@@ -23,18 +23,19 @@ requirements:
     - hatch-jupyter-builder >=0.5.3
     - hatchling >=1.8.1
     - jupyter_core
+    - jupyterlab >=4.0.0,<5.0.0
   run:
     - python
     - jupyter_client >=7.4.4,<9
     - jupyter_core >=4.11.0
-    - jupyter_server >=2.0.0,<3
+    - jupyter_server >=1.18,<3
     - jupyterlab_server >=2.3.0,<3
     - nbclient >=0.4.0
     - nbconvert >=6.4.5,<8
     - traitlets >=5.0.3,<6
     - websockets >=9.0
   run_constrained:
-    - ipywidgets =8 # set by core developer on cf recipe.
+    - ipywidgets >=7  # set by core developer on cf recipe.
 
 test:
   imports:
@@ -44,7 +45,6 @@ test:
   commands:
     - pip check
     - voila --help
-
 
 about:
   home: https://github.com/voila-dashboards/voila
