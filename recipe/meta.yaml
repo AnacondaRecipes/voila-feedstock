@@ -20,13 +20,13 @@ requirements:
   host:
     - python
     - pip
-    - hatch-jupyter-builder >=0.5.3
     - hatchling >=1.8.1
+    - jupyterlab >=4.0,<5
     - jupyter_core
-    - jupyterlab >=4.0,<5.dev0
+    - hatch-jupyter-builder >=0.5.3
   run:
     - python
-    - jupyter_client <9,>=7.4.4
+    - jupyter_client >=7.4.4,<9
     - jupyter_core >=4.11.0
     - jupyter_server >=1.18,<3
     - jupyterlab_server >=2.3.0,<3
@@ -34,20 +34,45 @@ requirements:
     - nbconvert >=6.4.5,<8
     - traitlets >=5.0.3,<6
     - websockets >=9.0
-    - jupyter-core >=4.11.0
-    - jupyter-server <3,>=1.18
-    - jupyterlab-server <3,>=2.3.0
   run_constrained:
     - ipywidgets >=7  # set by core developer on cf recipe.
 
+# E tornado.httpclient.HTTPClientError: HTTP 404: Not Found
+{% set deselect_test = " --deselect=tests/app/static_files_test.py::test_static_file_other_template" %}
+{% set deselect_test = deselect_test + " --deselect=tests/server/static_files_test.py::test_static_file_other_template" %}
+# >       assert response_lab.body.decode("utf-8") != response_test_template.body.decode(
+            # "utf-8"
+        # )
+# E       assert 'var _JUPYTERLAB;(()=>{var e,t,r,l,n,a,o,i,
+{% set deselect_test = deselect_test + " --deselect=tests/app/static_files_test.py::test_static_file_override" %}
+{% set deselect_test = deselect_test + " --deselect=tests/server/static_files_test.py::test_static_file_override" %}
+# E       tornado.simple_httpclient.HTTPTimeoutError: Timeout during request
+{% set deselect_test = deselect_test + " --deselect=tests/app/preprocessor_test.py::test_markdown_preprocessor" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/template_cli_test.py::test_template_test" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_test" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_override" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/template_arg_test.py::test_template" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/template_config_file_test.py::test_template_test" %}
+
 test:
+  source_files:
+    - tests
+    - share 
   imports:
     - voila
   requires:
     - pip
+    - pytest
+    - ipywidgets
+    - ipykernel
+    - pytest-tornasync
+    - papermill
+    - matplotlib
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - voila --help
+    - pytest -v tests {{ deselect_test }}
 
 about:
   home: https://github.com/voila-dashboards/voila
@@ -64,7 +89,7 @@ about:
     By default, voila disallows execute requests from the front-end, disabling
     the ability to execute arbitrary code.
   dev_url: https://github.com/voila-dashboards/voila
-  doc_url: https://voila.readthedocs.io/
+  doc_url: https://voila.readthedocs.io
 
 extra:
   recipe-maintainers:
