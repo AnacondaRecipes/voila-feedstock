@@ -45,6 +45,7 @@ requirements:
 # E       tornado.simple_httpclient.HTTPTimeoutError: Timeout during request
 {% set deselect_test = deselect_test + " --deselect=tests/app/preprocessor_test.py::test_markdown_preprocessor" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/template_cli_test.py::test_template_test" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_test" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_override" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/template_arg_test.py::test_template" %}
