@@ -50,10 +50,6 @@ requirements:
 {% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_override" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/template_arg_test.py::test_template" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/template_config_file_test.py::test_template_test" %}
-# CI Issue: tests/app/preheat_configuration_test.py::test_refill_kernel_asynchronously Fatal Python error: Aborted
-# tests/app/preheat_multiple_notebooks_test.py::test_render_notebook_with_heated_kernel Fatal Python error: Aborted
-{% set deselect_test = deselect_test + " --deselect=tests/app/preheat_configuration_test.py::test_refill_kernel_asynchronously" %}  # [osx]
-{% set deselect_test = deselect_test + " --deselect=tests/app/preheat_multiple_notebooks_test.py::test_render_notebook_with_heated_kernel" %}  # [osx]
 # tests randomly hanging on CI
 {% set ignore_test = " --ignore=tests/server" %}
 
@@ -75,7 +71,8 @@ test:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - voila --help
-    - pytest -v tests {{ deselect_test }} {{ ignore_test }}
+    # OSX tests randomly crash on CI due to unknown reason, also failing due to 'zmq.error.ZMQError: Too many open files'
+    - pytest -v tests {{ deselect_test }}  # [not osx]
 
 about:
   home: https://github.com/voila-dashboards/voila
