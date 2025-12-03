@@ -50,7 +50,9 @@ requirements:
 {% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_override" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/template_arg_test.py::test_template" %}
 {% set deselect_test = deselect_test + " --deselect=tests/app/template_config_file_test.py::test_template_test" %}
-# tests randomly hanging
+# CI Issue: tests/app/preheat_configuration_test.py::test_refill_kernel_asynchronously Fatal Python error: Aborted
+{% set deselect_test = deselect_test + " --deselect=tests/app/preheat_configuration_test.py::test_refill_kernel_asynchronously" %}
+# tests randomly hanging on CI
 {% set ignore_test = " --ignore=tests/server" %}
 
 test:
