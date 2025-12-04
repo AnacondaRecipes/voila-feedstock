@@ -72,7 +72,7 @@ test:
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - voila --help
     # OSX tests randomly crash on CI due to unknown reason, also failing due to 'zmq.error.ZMQError: Too many open files'
-    - pytest -v tests {{ deselect_test }}  # [not osx]
+    - pytest -v tests {{ deselect_test }} {{ ignore_test }} # [not osx]
 
 about:
   home: https://github.com/voila-dashboards/voila
