@@ -1,21 +1,5 @@
 {% set name = "voila" %}
 {% set version = "0.5.12" %}
-{% set deselect_test = " --deselect=tests/app/static_files_test.py::test_static_file_other_template" %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/static_files_test.py::test_static_file_override"' %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/preprocessor_test.py::test_markdown_preprocessor"' %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/template_cli_test.py::test_template_test"' %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/config_paths_test.py::test_template"' %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_test"' %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_override"' %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/template_arg_test.py::test_template"' %}
-{% set deselect_test = 'deselect_test + " --deselect=tests/app/template_config_file_test.py::test_template_test"' %}
-{% set ignore_test = " --ignore=tests/server" %}
-
-# E tornado.httpclient.HTTPClientError: HTTP 404: Not Found
-# >       assert response_lab.body.decode("utf-8") != response_test_template.body.decode(# "utf-8"# )
-# E       assert 'var _JUPYTERLAB;(()=>{var e,t,r,l,n,a,o,i,
-# E       tornado.simple_httpclient.HTTPTimeoutError: Timeout during request
-# tests randomly hanging on CI
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -52,6 +36,21 @@ requirements:
   run_constrained:
     - ipywidgets >=7  # set by core developer on cf recipe.
 
+# E tornado.httpclient.HTTPClientError: HTTP 404: Not Found
+{% set deselect_test = " --deselect=tests/app/static_files_test.py::test_static_file_other_template" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/static_files_test.py::test_static_file_override" %}
+# >       assert response_lab.body.decode("utf-8") != response_test_template.body.decode(# "utf-8"# )
+# E       assert 'var _JUPYTERLAB;(()=>{var e,t,r,l,n,a,o,i,
+# E       tornado.simple_httpclient.HTTPTimeoutError: Timeout during request
+{% set deselect_test = deselect_test + " --deselect=tests/app/preprocessor_test.py::test_markdown_preprocessor" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/template_cli_test.py::test_template_test" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_test" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/config_paths_test.py::test_template_override" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/template_arg_test.py::test_template" %}
+{% set deselect_test = deselect_test + " --deselect=tests/app/template_config_file_test.py::test_template_test" %}
+# tests randomly hanging on CI
+{% set ignore_test = " --ignore=tests/server" %}
 test:
   source_files:
     - tests
