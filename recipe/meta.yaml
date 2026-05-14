@@ -63,7 +63,8 @@ test:
     - ipywidgets
     - ipykernel
     - pytest-tornasync
-    - papermill
+    # papermill isn't available for py314+ on the main channel yet.
+    - papermill  # [py<314]
     - matplotlib
   commands:
     - pip check
