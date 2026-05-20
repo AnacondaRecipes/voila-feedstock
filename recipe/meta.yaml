@@ -40,7 +40,7 @@ requirements:
 # E tornado.httpclient.HTTPClientError: HTTP 404: Not Found
 {% set deselect_test = " --deselect=tests/app/static_files_test.py::test_static_file_other_template" %}
 # >       assert response_lab.body.decode("utf-8") != response_test_template.body.decode(# "utf-8"# )
-# E       assert 'var _JUPYTERLAB;(()=>{var e,t,r,l,n,a,o,i,
+# E       assert 'var _JUPYTERLAB;(()=>{var e,t,r,l,n,a,o,i, 
 {% set deselect_test = deselect_test + " --deselect=tests/app/static_files_test.py::test_static_file_override" %}
 # E       tornado.simple_httpclient.HTTPTimeoutError: Timeout during request
 {% set deselect_test = deselect_test + " --deselect=tests/app/preprocessor_test.py::test_markdown_preprocessor" %}
