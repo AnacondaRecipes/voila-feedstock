@@ -1,17 +1,17 @@
 {% set name = "voila" %}
-{% set version = "0.5.11" %}
+{% set version = "0.5.12" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 12057fe409298024a104b75bbb1050576b89f42fe6e8fead8f5d1f79ace66b19
+  sha256: 33d81577775e22d85fad989e9d115774f3cacf1ec21a92d81e9cf3c2a7d5bc3a
 
 build:
   number: 0
-  skip: true  # [py<38]
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vvv
   entry_points:
     - voila = voila.app:main
@@ -40,7 +40,7 @@ requirements:
 # E tornado.httpclient.HTTPClientError: HTTP 404: Not Found
 {% set deselect_test = " --deselect=tests/app/static_files_test.py::test_static_file_other_template" %}
 # >       assert response_lab.body.decode("utf-8") != response_test_template.body.decode(# "utf-8"# )
-# E       assert 'var _JUPYTERLAB;(()=>{var e,t,r,l,n,a,o,i,
+# E       assert 'var _JUPYTERLAB;(()=>{var e,t,r,l,n,a,o,i, 
 {% set deselect_test = deselect_test + " --deselect=tests/app/static_files_test.py::test_static_file_override" %}
 # E       tornado.simple_httpclient.HTTPTimeoutError: Timeout during request
 {% set deselect_test = deselect_test + " --deselect=tests/app/preprocessor_test.py::test_markdown_preprocessor" %}
