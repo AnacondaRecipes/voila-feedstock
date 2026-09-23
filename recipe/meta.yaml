@@ -1,5 +1,5 @@
 {% set name = "voila" %}
-{% set version = "0.5.12" %}
+{% set version = "0.5.13" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 33d81577775e22d85fad989e9d115774f3cacf1ec21a92d81e9cf3c2a7d5bc3a
+  sha256: e7a01973b085888df9a0bf50207fc252f700675011a4d053ab1f94be219b55a7
 
 build:
   number: 0
@@ -56,7 +56,7 @@ requirements:
 test:
   source_files:
     - tests
-    - share 
+    - share
   imports:
     - voila
   requires:
@@ -72,7 +72,7 @@ test:
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - voila --help
     # OSX tests randomly crash on CI due to unknown reason, also failing due to 'zmq.error.ZMQError: Too many open files'
-    - pytest -v tests {{ deselect_test }} {{ ignore_test }} # [not osx]
+    - pytest -vv tests {{ deselect_test }} {{ ignore_test }}  # [not osx]
 
 about:
   home: https://github.com/voila-dashboards/voila
